@@ -1,4 +1,4 @@
-package ru.hc128;
+package ru.hc128.crypto;
 
 /**
  * the foundation class for the exceptions thrown by the crypto packages.

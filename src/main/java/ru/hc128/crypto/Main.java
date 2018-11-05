@@ -1,20 +1,19 @@
 package ru.hc128.crypto;
 
 import ru.hc128.crypto.params.KeyParameter;
+import ru.hc128.crypto.params.ParametersWithIV;
+import ru.hc128.util.IO.InputOutput;
 import ru.hc128.util.encoders.Hex;
 
+import java.io.UnsupportedEncodingException;
+
+
 public class Main {
+
+    private static final byte[] MSG = new byte[64];
+
     private static String[][] HC128_VerifiedTest =
             {
-                    {
-                            "Set 2, vector#  0",
-                            "00000000000000000000000000000000",
-                            "00000000000000000000000000000000",
-                            "82001573A003FD3B7FD72FFB0EAF63AA" +
-                                    "C62F12DEB629DCA72785A66268EC758B" +
-                                    "1EDB36900560898178E0AD009ABF1F49" +
-                                    "1330DC1C246E3D6CB264F6900271D59C"
-                    },
                     {
                             "Set 6, vector#  0",
                             "0053A6F94C9FF24598EB3E91E4378ADD",
@@ -56,14 +55,52 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Start program");
 
+        InputOutput inputOutput = new InputOutput();
+        inputOutput.openFile();
+        inputOutput.readFile();
+        String[] strFromFile = inputOutput.partitionStringFromFile();
+        inputOutput.closeFile();
+
         StreamCipher hc = new HC128Engine();
 
-        //for (int i = 0; i != HC128_VerifiedTest.length; i++)
-        //{
-        //Ключ должен быть длинной 16 символов
-            byte[] test = "02wYwcOnnSasdvSA".getBytes();
-            KeyParameter keyParameter = new KeyParameter(test);
-            hc.init(true,keyParameter);
-        //}
+        byte[][] encodeAnswer = new byte[HC128_VerifiedTest.length][];
+        for (int i = 0; i != HC128_VerifiedTest.length; i++)
+        {
+            String[] test = HC128_VerifiedTest[i];
+            encodeAnswer[i] = go(hc, "HC-128 - " + test[0], Hex.decode(test[1]), Hex.decode(test[2]), Hex.decode(test[3]), true);
+            System.out.println( Hex.toHexString(encodeAnswer[i]));
+        }
+
+
+
+        byte[][] decodeAnswer = new byte[HC128_VerifiedTest.length][];
+
+        for (int i = 0; i != HC128_VerifiedTest.length; i++)
+        {
+            String[] test = HC128_VerifiedTest[i];
+            decodeAnswer[i] = go(hc, "HC-128 - " + encodeAnswer[0], Hex.decode(test[1]), Hex.decode(test[2]), Hex.encode(encodeAnswer[3]), false);
+                //System.out.println( Hex.toHexString(decodeAnswer[i]));
+        }
+
+    }
+
+    public static byte[] go(StreamCipher hc, String test, byte[] key, byte[] IV, byte[] expected, boolean encrypt) {
+        KeyParameter kp = new KeyParameter(key);
+        ParametersWithIV ivp = new ParametersWithIV(kp, IV);
+
+        byte[] answer = new byte[64];
+        hc.init(encrypt, ivp);
+        for (int i = 0; i < 64; i++)
+        {
+            answer[i] = hc.returnByte(MSG[i]);
+            /**
+            if (hc.returnByte(MSG[i]) != expected[i])
+            {
+                System.out.println(test + " failure at byte " + i);
+            }
+             */
+        }
+        System.out.println("Success");
+        return answer;
     }
 }

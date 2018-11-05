@@ -19,6 +19,16 @@ import ru.hc128.crypto.params.ParametersWithIV;
 public class HC128Engine
     implements StreamCipher
 {
+
+    public HC128Engine(byte[] iv, byte[] key) {
+        this.iv = iv;
+        this.key = key;
+        init();
+    }
+
+    public HC128Engine() {
+    }
+
     private int[] p = new int[512];
     private int[] q = new int[512];
     private int cnt = 0;

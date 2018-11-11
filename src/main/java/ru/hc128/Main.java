@@ -2,45 +2,51 @@ package ru.hc128.crypto;
 
 import ru.hc128.util.IO.Input;
 import ru.hc128.util.IO.Output;
+import ru.hc128.util.test.TestResult;
+
+import java.io.IOException;
 
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Start program");
         String iv_srt = "@#$$54214AEFDCAE";
         String key_srt = "AAAAAAAAqweAAAAT";
 
         boolean encrypt = false;
-
+//        32 -18 17 5 60 -64 107 80 -14 56 57 84
+//                -82 51 -3 32 30 -14 89
+//        asdsadfasd123
+//                ASDADSA
         if (encrypt) {
             Input inputOutput = new Input();
             inputOutput.openFile();
             String[] arrStr = inputOutput.readForEncryptFile();
             inputOutput.closeFile();
+            byte[][] ed = new byte[arrStr.length][];
             for (int i = 0; i < arrStr.length; i++) {
                 HC128Engine hc_enc = new HC128Engine(iv_srt.getBytes(), key_srt.getBytes());
-                String s = arrStr[i];
-                byte[] ed = encrypt(hc_enc, s.getBytes());
-                new Output().rewriteEncryptFile(ed);
-                hc_enc.reset();
+                ed[i] = encrypt(hc_enc, arrStr[i].getBytes());
 
-                byte[] ed33 = encrypt(hc_enc, ed);
-                System.out.println(new String(ed33));
             }
+            new Output().rewriteEncryptFile(ed);
+
         } else {
             Input inputOutput = new Input();
             inputOutput.openFile();
-            byte[] ed = inputOutput.readForDecryptFile();
+            byte[][] inputed = inputOutput.readForDecryptFile();
             inputOutput.closeFile();
-            for (int i = 0; i < ed.length; i++) {
+            byte[][] outputed33 = new byte[inputed.length][];
+            for(int i = 0; i < inputed.length; i++) {
                 HC128Engine hc_enc = new HC128Engine(iv_srt.getBytes(), key_srt.getBytes());
                 hc_enc.reset();
 
-                byte[] ed33 = encrypt(hc_enc, ed);
-                new Output().rewriteDecryptFile(new String(ed33));
-                System.out.println(new String(ed33));
+                outputed33[i] = encrypt(hc_enc, inputed[i]);
             }
+            new Output().rewriteDecryptFile(outputed33);
+            //System.out.println(new String(ed33));
+
         }
 
     }

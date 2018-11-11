@@ -6,9 +6,9 @@ import java.io.IOException;
 public class Output {
 
 
-    public void rewriteEncryptFile(byte[][] b) {
+    public void rewriteEncryptFile(String pathToFile,byte[][] b) {
         //каждый новый массив с новой строки
-        try (FileWriter fileWriter = new FileWriter("D:/tmp/test.txt")) {
+        try (FileWriter fileWriter = new FileWriter(pathToFile)) {
             StringBuffer stringBuffer = new StringBuffer();
             for(int i = 0; i < b.length; i++) {
                 for(int j = 0; j < b[i].length; j++) {
@@ -23,13 +23,13 @@ public class Output {
         }
     }
 
-    public void rewriteDecryptFile(byte[][] outputByte) {
+    public void rewriteDecryptFile(String pathToFile, byte[][] outputByte) {
         String str = "";
         System.out.println(new String(outputByte[0]));
         for(int i = 0; i < outputByte.length; i++) {
                 str = str + new String(outputByte[i]) + "\r\n";
         }
-        try (FileWriter fileWriter = new FileWriter("D:/tmp/test.txt")) {
+        try (FileWriter fileWriter = new FileWriter(pathToFile)) {
             fileWriter.write(str);
         } catch (IOException e) {
             e.printStackTrace();

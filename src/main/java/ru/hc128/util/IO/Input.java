@@ -7,9 +7,9 @@ public class Input {
 
     private Scanner x;
 
-    public void openFile() {
+    public void openFile(String pathToFile) {
         try {
-            x = new Scanner(new File("D:/tmp/test.txt"));
+            x = new Scanner(new File(pathToFile));
         } catch (Exception e) {
             System.out.println("file not open \n");
         }
@@ -24,9 +24,9 @@ public class Input {
         return i;
     }
 
-    public String[] readForEncryptFile() {
+    public String[] readForEncryptFile(String pathToFile) {
         String[] strInFile = new String[countStrings()];
-        openFile();
+        openFile(pathToFile);
         int i = 0;
         while (x.hasNext()) {
             strInFile[i] = x.next();
@@ -35,10 +35,10 @@ public class Input {
         return strInFile;
     }
 
-    public byte[][] readForDecryptFile() throws IOException {
+    public byte[][] readForDecryptFile(String pathToFile) throws IOException {
         String[] strInFile = new String[countStrings() + 1];
-        openFile();
-        File file = new File("D:/tmp/test.txt");
+        openFile(pathToFile);
+        File file = new File(pathToFile);
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         String tempString = null;
         byte[][] res =  new byte[countStrings()][];
@@ -64,30 +64,6 @@ public class Input {
             res[i] = result;
             i++;
         }
-//        List<Byte> bytes = new ArrayList<>();
-//        int i = 0;
-//        while (x.hasNext()) {
-//            strInFile[i] = x.next();
-//            while (strInFile[i].length() > 0){
-//                if (strInFile[i].indexOf(" ") > 0) {
-//                    bytes.add(Byte.parseByte(strInFile[i].substring(0, strInFile[i].indexOf(" "))));
-//                    strInFile[i] = strInFile[i].substring(strInFile[i].indexOf(" "));
-//                } else {
-//                    bytes.add(Byte.parseByte(strInFile[i]));
-//                    strInFile[i] = "";
-//                }
-//            }
-//            i++;
-//        }
-//        byte[] result = new byte[bytes.size()];
-//        for (int l = 0; l < bytes.size(); l++){
-//            result[l] = bytes.get(l);
-//        }
-//        return result;
-//        byte[] result = new byte[bytes.size()];
-//        for (int l = 0; l < bytes.size(); l++){
-//            result[l] = bytes.get(l);
-//        }
         return res;
     }
 

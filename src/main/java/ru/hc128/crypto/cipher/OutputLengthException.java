@@ -1,4 +1,4 @@
-package ru.hc128.crypto;
+package ru.hc128.crypto.cipher;
 
 public class OutputLengthException
     extends DataLengthException

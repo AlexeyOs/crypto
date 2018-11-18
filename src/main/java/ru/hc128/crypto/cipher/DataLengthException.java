@@ -1,4 +1,4 @@
-package ru.hc128.crypto;
+package ru.hc128.crypto.cipher;
 
 /**
  * this exception is thrown if a buffer that is meant to have output

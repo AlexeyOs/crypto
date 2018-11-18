@@ -1,6 +1,6 @@
-package ru.hc128.crypto.params;
+package ru.hc128.crypto.cipher.params;
 
-import ru.hc128.crypto.CipherParameters;
+import ru.hc128.crypto.cipher.CipherParameters;
 
 public class KeyParameter
     implements CipherParameters

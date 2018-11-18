@@ -1,7 +1,7 @@
-package ru.hc128.crypto;
+package ru.hc128.crypto.cipher;
 
-import ru.hc128.crypto.params.KeyParameter;
-import ru.hc128.crypto.params.ParametersWithIV;
+import ru.hc128.crypto.cipher.params.KeyParameter;
+import ru.hc128.crypto.cipher.params.ParametersWithIV;
 
 /**
  * HC-128 is a software-efficient stream cipher created by Hongjun Wu. It

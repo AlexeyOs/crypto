@@ -1,4 +1,4 @@
-package ru.hc128.util.IO;
+package ru.hc128.crypto.util.IO;
 
 import java.io.*;
 import java.util.*;

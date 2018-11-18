@@ -1,8 +1,8 @@
 package ru.hc128;
 
 import ru.hc128.crypto.HC128Engine;
-import ru.hc128.util.IO.Input;
-import ru.hc128.util.IO.Output;
+import ru.hc128.crypto.util.IO.Input;
+import ru.hc128.crypto.util.IO.Output;
 
 import java.io.FileInputStream;
 import java.io.IOException;

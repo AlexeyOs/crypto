@@ -39,7 +39,7 @@ public class CryptoApplication {
 			Scanner in = new Scanner(System.in);
 			System.out.println("Input path to file: ");
 			System.out.println("example:");
-			System.out.println("/run/media/alex/ktom/tmp/test.txt");
+			System.out.println("D:/tmp/test.xls");
 			String pathToFile = in.next();
 			System.out.println("Input true(encrypt) or false(decrypt)");
 			boolean encrypt = in.nextBoolean();

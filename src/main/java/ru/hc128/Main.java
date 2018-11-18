@@ -6,6 +6,7 @@ import ru.hc128.util.IO.Output;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Scanner;
 
 
 public class Main {
@@ -30,13 +31,18 @@ public class Main {
         System.out.println("Start program");
         String iv_srt = "@#$$54214AEFDCAE";
         String key_srt = "AAAAAAAAqweAAAAT";
-        String pathToFile = "/run/media/alex/ktom/tmp/test.xls";
-        boolean encrypt = false;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Input path to file: ");
+        System.out.println("example:");
+        System.out.println("/run/media/alex/ktom/tmp/test.txt");
+        String pathToFile = in.next();
+        System.out.println("Input true(encrypt) or false(decrypt)");
+        boolean encrypt = in.nextBoolean();
         if (encrypt) {
             int i =0;
             byte[][] input  = new byte[count(pathToFile)][];
             byte[][] ed  = new byte[count(pathToFile)][];
-            try(FileInputStream fin=new FileInputStream("/run/media/alex/ktom/tmp/test.xls"))
+            try(FileInputStream fin=new FileInputStream(pathToFile))
             {
                 input [i] = new byte[fin.available()];
                 // считываем буфер

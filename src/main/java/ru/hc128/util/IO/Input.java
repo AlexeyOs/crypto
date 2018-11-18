@@ -24,17 +24,6 @@ public class Input {
         return i;
     }
 
-    public String[] readForEncryptFile(String pathToFile) {
-        String[] strInFile = new String[countStrings()];
-        openFile(pathToFile);
-        int i = 0;
-        while (x.hasNext()) {
-            strInFile[i] = x.next();
-            i++;
-        }
-        return strInFile;
-    }
-
     public byte[][] readForDecryptFile(String pathToFile) throws IOException {
         String[] strInFile = new String[countStrings() + 1];
         openFile(pathToFile);

@@ -18,8 +18,8 @@ public class Output {
                 }
                 stringBuffer.append("\r\n");
             }
-            System.out.println(stringBuffer);
             fileWriter.write(stringBuffer.toString());
+            System.out.println("Success encrypt file: " + pathToFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,6 +32,7 @@ public class Output {
             // записываем из буфера в файл
             fos.write(b[i], 0, b[i].length);
             i++;
+            System.out.println("Success decrypt file" + pathToFile);
         }
         catch(IOException ex){
 

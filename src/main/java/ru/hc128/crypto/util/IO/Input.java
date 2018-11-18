@@ -34,10 +34,8 @@ public class Input {
         int i = 0;
         while ((tempString = bufferedReader.readLine()) != null) {
             List<Byte> bytes = new ArrayList<>();
-            System.out.println(tempString);
             while (tempString.length() > 0) {
                 if (tempString.indexOf(",") > 0) {
-                    System.out.println();
                     bytes.add(Byte.parseByte(tempString.substring(0, tempString.indexOf(","))));
                     tempString = tempString.substring(tempString.indexOf(",") + 1);
                 } else {

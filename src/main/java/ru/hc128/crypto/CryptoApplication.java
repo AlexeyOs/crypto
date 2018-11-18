@@ -34,45 +34,45 @@ public class CryptoApplication {
 		System.out.println("Start program");
 		String iv_srt = "@#$$54214AEFDCAE";
 		String key_srt = "AAAAAAAAqweAAAAT";
-		Scanner in = new Scanner(System.in);
-		System.out.println("Input path to file: ");
-		System.out.println("example:");
-		System.out.println("/run/media/alex/ktom/tmp/test.txt");
-		String pathToFile = in.next();
-		System.out.println("Input true(encrypt) or false(decrypt)");
-		boolean encrypt = in.nextBoolean();
-		if (encrypt) {
-			int i =0;
-			byte[][] input  = new byte[count(pathToFile)][];
-			byte[][] ed  = new byte[count(pathToFile)][];
-			try(FileInputStream fin=new FileInputStream(pathToFile))
-			{
-				input [i] = new byte[fin.available()];
-				// считываем буфер
-				fin.read(input [i], 0, input [i].length);
-				HC128Engine hc_enc = new HC128Engine(iv_srt.getBytes(), key_srt.getBytes());
-				ed[i] = encrypt(hc_enc, input[i]);
-				i++;
-			}
-			catch(IOException ex){
+		boolean run = true;
+		while (run) {
+			Scanner in = new Scanner(System.in);
+			System.out.println("Input path to file: ");
+			System.out.println("example:");
+			System.out.println("/run/media/alex/ktom/tmp/test.txt");
+			String pathToFile = in.next();
+			System.out.println("Input true(encrypt) or false(decrypt)");
+			boolean encrypt = in.nextBoolean();
+			if (encrypt) {
+				int i = 0;
+				byte[][] input = new byte[count(pathToFile)][];
+				byte[][] ed = new byte[count(pathToFile)][];
+				try (FileInputStream fin = new FileInputStream(pathToFile)) {
+					input[i] = new byte[fin.available()];
+					// считываем буфер
+					fin.read(input[i], 0, input[i].length);
+					HC128Engine hc_enc = new HC128Engine(iv_srt.getBytes(), key_srt.getBytes());
+					ed[i] = encrypt(hc_enc, input[i]);
+					i++;
+				} catch (IOException ex) {
 
-				System.out.println(ex.getMessage());
-			}
-			new Output().rewriteEncryptFileZip(pathToFile, ed);
+					System.out.println(ex.getMessage());
+				}
+				new Output().rewriteEncryptFileZip(pathToFile, ed);
 
-		} else {
-			Input inputOutput = new Input();
-			inputOutput.openFile(pathToFile);
-			byte[][] inputed = inputOutput.readForDecryptFile(pathToFile);
-			inputOutput.closeFile();
-			byte[][] outputed33 = new byte[inputed.length][];
-			for(int i = 0; i < inputed.length; i++) {
-				HC128Engine hc_enc = new HC128Engine(iv_srt.getBytes(), key_srt.getBytes());
-				hc_enc.reset();
-
-				outputed33[i] = encrypt(hc_enc, inputed[i]);
+			} else {
+				Input inputOutput = new Input();
+				inputOutput.openFile(pathToFile);
+				byte[][] inputed = inputOutput.readForDecryptFile(pathToFile);
+				inputOutput.closeFile();
+				byte[][] outputed33 = new byte[inputed.length][];
+				for (int i = 0; i < inputed.length; i++) {
+					HC128Engine hc_enc = new HC128Engine(iv_srt.getBytes(), key_srt.getBytes());
+					hc_enc.reset();
+					outputed33[i] = encrypt(hc_enc, inputed[i]);
+				}
+				new Output().rewriteDecryptFileZip(pathToFile, outputed33);
 			}
-			new Output().rewriteDecryptFileZip(pathToFile, outputed33);
 		}
 	}
 

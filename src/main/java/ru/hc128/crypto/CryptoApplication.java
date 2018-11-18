@@ -2,6 +2,7 @@ package ru.hc128.crypto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import ru.hc128.crypto.cipher.HC128Engine;
 import ru.hc128.crypto.util.IO.Input;
 import ru.hc128.crypto.util.IO.Output;
 
